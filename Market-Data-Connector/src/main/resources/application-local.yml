@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "vault://"
   cloud:
     vault:
       uri: http://127.0.0.1:8200
@@ -6,4 +8,4 @@ spring:
       kv:
         enabled: true
         backend: secret
-        kv.default-context: application
+        kv.default-context: kv/application

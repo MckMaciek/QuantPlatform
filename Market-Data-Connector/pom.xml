@@ -16,6 +16,7 @@
     <properties>
         <java.version>25</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -27,6 +28,19 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-vault-config</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- BouncyCastle to override the transitive spring cloud vault-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.84</version>
         </dependency>
 
         <dependency>
