@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    vault:
+      uri: http://127.0.0.1:8200
+      token: <token>
+      scheme: http
+      kv:
+        enabled: true
+        backend: secret
+        kv.default-context: application
