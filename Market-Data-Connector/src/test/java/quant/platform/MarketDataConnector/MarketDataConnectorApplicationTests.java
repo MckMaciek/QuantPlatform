@@ -1,4 +1,4 @@
-package quant.platform.Market_Data_Connector;
+package quant.platform.MarketDataConnector;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
