@@ -2,52 +2,38 @@ package quant.platform.FinnHubDataConnector.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-import org.springframework.messaging.simp.stomp.StompCommand;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
-
-import java.lang.reflect.Type;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Slf4j
-class WebSocketHandler implements StompSessionHandler {
+class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
-    public void afterConnected(@NonNull final StompSession session,
-                               @NonNull final StompHeaders connectedHeaders) {
+    protected void handleTextMessage(@NonNull final WebSocketSession session,
+                                     @NonNull final TextMessage message) {
+        log.debug(message.getPayload());
+    }
+
+    @Override
+    public void afterConnectionEstablished(@NonNull final WebSocketSession session) {
         log.info("Successfully established connection: {}",
-                session.getSessionId());
+                session.getId());
     }
 
     @Override
-    public void handleException(@NonNull final StompSession session,
-                                @Nullable final StompCommand command,
-                                @NonNull final StompHeaders headers,
-                                final byte @NonNull [] payload,
-                                @NonNull final Throwable exception) {
-        log.error("Exception occurred, sessionId: {}",
-                session.getSessionId(),
-                exception);
-    }
-
-    @Override
-    public void handleTransportError(@NonNull final StompSession session,
+    public void handleTransportError(@NonNull final WebSocketSession session,
                                      @NonNull final Throwable exception) {
         log.error("Transport error, sessionId: {}",
-                session.getSessionId(),
+                session.getId(),
                 exception);
     }
 
     @Override
-    public @NonNull Type getPayloadType(@NonNull final StompHeaders headers) {
-        return String.class;
-    }
-
-    @Override
-    public void handleFrame(@NonNull final StompHeaders headers,
-                            @Nullable final Object payload) {
-        final String msg = (String) payload;
-        log.debug(msg);
+    public void afterConnectionClosed(@NonNull final WebSocketSession session,
+                                      @NonNull final CloseStatus status) {
+        log.info("Connection: {} closed",
+                session.getId());
     }
 }
