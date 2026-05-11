@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: FinnHubConnectorApplication
+
+finnhub:
+  url: wss://ws.finnhub.io

@@ -8,4 +8,3 @@ spring:
       kv:
         enabled: true
         backend: secret
-        kv.default-context: kv/application
