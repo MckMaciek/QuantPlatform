@@ -7,6 +7,8 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 @EnableWebSocket
@@ -29,10 +31,14 @@ class WebSocketConfiguration {
     public WebSocketConnectionManager wsConnectionManager() {
         final WebSocketClient client = new StandardWebSocketClient();
 
+        final UriComponents uriBuilder = UriComponentsBuilder.fromUriString(finnHubUrl)
+                .queryParam("token", finnHubToken)
+                .build();
+
         final WebSocketConnectionManager manager = new WebSocketConnectionManager(
                 client,
                 new WebSocketHandler(defaultWebSocketSender),
-                finnHubUrl + "?token=" + finnHubToken);
+                uriBuilder.toUriString());
         manager.setAutoStartup(true);
 
         return manager;
