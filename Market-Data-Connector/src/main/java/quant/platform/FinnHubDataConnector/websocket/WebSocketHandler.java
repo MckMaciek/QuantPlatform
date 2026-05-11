@@ -18,31 +18,31 @@ class WebSocketHandler extends TextWebSocketHandler {
     private static final int KB = 1024;
     private static final int BUFFER_SIZE_LIMIT_KB = 512 * KB;
 
-    private final DefaultWebSocketSender defaultWebSocketSender;
+    private final DefaultWebSocketSender webSocketSender;
 
     @Override
-    public void afterConnectionEstablished(@NonNull final WebSocketSession session) {
-        log.info("Successfully established connection: {}", session.getId());
-        final WebSocketSession secureSession = new ConcurrentWebSocketSessionDecorator(
-                session, SEND_TIME_LIMIT_MS, BUFFER_SIZE_LIMIT_KB);
-        defaultWebSocketSender.setWebSocketSession(secureSession);
+    public void afterConnectionEstablished(@NonNull final WebSocketSession unsafeSession) {
+        log.info("Successfully established connection: {}", unsafeSession.getId());
+        final WebSocketSession safeSession = new ConcurrentWebSocketSessionDecorator(
+                unsafeSession, SEND_TIME_LIMIT_MS, BUFFER_SIZE_LIMIT_KB);
+        webSocketSender.setWebSocketSession(safeSession);
     }
 
     @Override
-    protected void handleTextMessage(@NonNull final WebSocketSession session,
+    protected void handleTextMessage(@NonNull final WebSocketSession unsafeSession,
                                      @NonNull final TextMessage message) {
         log.debug(message.getPayload());
     }
 
     @Override
-    public void handleTransportError(@NonNull final WebSocketSession session,
+    public void handleTransportError(@NonNull final WebSocketSession unsafeSession,
                                      @NonNull final Throwable exception) {
-        log.error("Transport error, sessionId: {}", session.getId(), exception);
+        log.error("Transport error, sessionId: {}", unsafeSession.getId(), exception);
     }
 
     @Override
-    public void afterConnectionClosed(@NonNull final WebSocketSession session,
+    public void afterConnectionClosed(@NonNull final WebSocketSession unsafeSession,
                                       @NonNull final CloseStatus status) {
-        log.info("Connection: {} closed", session.getId());
+        log.info("Connection: {} closed", unsafeSession.getId());
     }
 }
