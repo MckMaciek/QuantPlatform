@@ -2,12 +2,15 @@ package quant.platform.FinnHubDataConnector.websocket;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import quant.platform.FinnHubDataConnector.util.time.Measured;
+import quant.platform.FinnHubDataConnector.util.time.TimeUtil;
+
+import java.io.IOException;
 
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
@@ -20,13 +23,20 @@ class DefaultWebSocketSender implements WebSocketSender {
 
     private WebSocketSession webSocketSession;
 
-    @SneakyThrows
     public void sendMessage(final @NonNull String message) {
         requireNonNull(message);
-        if (isSessionOpen()) {
-            log.debug("Sending message using webSocket");
-            webSocketSession.sendMessage(new TextMessage(message));
-        }
+
+        final Measured<?> measured = TimeUtil.measure(() -> {
+            if (isSessionOpen()) {
+                log.debug("Sending message using webSocket");
+                try {
+                    webSocketSession.sendMessage(new TextMessage(message));
+                } catch (final IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        log.debug("Message has been sent, took {} [ms]", measured.timeTookMs());
     }
 
     private boolean isSessionOpen() {
