@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
     <groupId>quant.platform</groupId>
-    <artifactId>MarketDataConnector</artifactId>
+    <artifactId>FinnHubDataConnector</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name/>
     <properties>
@@ -55,6 +55,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
         <!-- TEST-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
