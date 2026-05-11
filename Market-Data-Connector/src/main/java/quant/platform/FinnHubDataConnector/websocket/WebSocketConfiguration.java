@@ -16,8 +16,8 @@ class WebSocketConfiguration {
     private final String finnHubUrl;
     private final String finnHubToken;
 
-    public WebSocketConfiguration(@Value("finnhub.url") final String finnHubUrl,
-                                  @Value("finnhub.api-key") final String finnHubToken) {
+    public WebSocketConfiguration(@Value("${finnhub.url}") final String finnHubUrl,
+                                  @Value("${finnhub.api-key}") final String finnHubToken) {
         this.finnHubUrl = finnHubUrl;
         this.finnHubToken = finnHubToken;
     }
