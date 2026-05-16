@@ -29,7 +29,7 @@ class SubscriptionRequester {
         final var measured = TimeUtil.measure(
                 () -> symbols.forEach(
                         symbol -> subscriptionSender.send(SubscriptionMessage.of(symbol))));
-        log.debug("Initializing subscriptions finished. Took ~{} [ms], sessionId: {}",
+        log.debug("Initializing subscriptions finished. Took ~ {} [ms], sessionId: {}",
                 measured.timeTookMs(), sessionId);
     }
 }

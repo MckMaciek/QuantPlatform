@@ -47,7 +47,7 @@ class WebSocketSenderImpl implements WebSocketSender {
                 log.warn("Cannot send message — session not open!");
             }
         });
-        log.debug("Message processing, took ~{} [ms]", measured.timeTookMs());
+        log.debug("Message processing, took ~ {} [ms]", measured.timeTookMs());
     }
 
     private boolean isSessionOpen() {
