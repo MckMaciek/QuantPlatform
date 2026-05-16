@@ -10,6 +10,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import quant.platform.FinnHubDataConnector.socket.session.WebSocketConnectionClosed;
 import quant.platform.FinnHubDataConnector.socket.session.WebSocketMessageReceived;
 import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 
@@ -41,14 +42,16 @@ class WebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void handleTransportError(@NonNull final WebSocketSession unsafeSession,
-                                     @NonNull final Throwable exception) {
-        log.error("Transport error, sessionId: {}", unsafeSession.getId(), exception);
+    public void afterConnectionClosed(@NonNull final WebSocketSession unsafeSession,
+                                      @NonNull final CloseStatus status) {
+        final String sessionId = unsafeSession.getId();
+        log.info("Connection: {} closed", sessionId);
+        eventPublisher.publishEvent(new WebSocketConnectionClosed(this, sessionId));
     }
 
     @Override
-    public void afterConnectionClosed(@NonNull final WebSocketSession unsafeSession,
-                                      @NonNull final CloseStatus status) {
-        log.info("Connection: {} closed", unsafeSession.getId());
+    public void handleTransportError(@NonNull final WebSocketSession unsafeSession,
+                                     @NonNull final Throwable exception) {
+        log.error("Transport error, sessionId: {}", unsafeSession.getId(), exception);
     }
 }
