@@ -15,14 +15,14 @@ class WebSocketConfiguration {
     private final String finnHubUrl;
     private final String finnHubToken;
 
-    private final DefaultWebSocketSender defaultWebSocketSender;
+    private final WebSocketSenderImpl webSocketSenderImpl;
 
     public WebSocketConfiguration(@Value("${finnhub.url}") final String finnHubUrl,
                                   @Value("${finnhub.api-key}") final String finnHubToken,
-                                  final DefaultWebSocketSender defaultWebSocketSender) {
+                                  final WebSocketSenderImpl webSocketSenderImpl) {
         this.finnHubUrl = finnHubUrl;
         this.finnHubToken = finnHubToken;
-        this.defaultWebSocketSender = defaultWebSocketSender;
+        this.webSocketSenderImpl = webSocketSenderImpl;
     }
 
     @Bean
@@ -35,7 +35,7 @@ class WebSocketConfiguration {
 
         final WebSocketConnectionManager manager = new WebSocketConnectionManager(
                 client,
-                new WebSocketHandler(defaultWebSocketSender),
+                new WebSocketHandler(webSocketSenderImpl),
                 uriBuilder.toUriString());
         manager.setAutoStartup(true);
 

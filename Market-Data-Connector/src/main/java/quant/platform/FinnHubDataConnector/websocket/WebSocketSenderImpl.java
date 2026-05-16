@@ -19,7 +19,7 @@ import static java.util.Objects.requireNonNull;
 @Setter
 @Service
 @RequiredArgsConstructor
-class DefaultWebSocketSender implements WebSocketSender {
+class WebSocketSenderImpl implements WebSocketSender {
 
     private volatile WebSocketSession webSocketSession;
 
