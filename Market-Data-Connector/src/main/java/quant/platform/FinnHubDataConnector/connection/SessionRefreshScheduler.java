@@ -15,8 +15,9 @@ public class SessionRefreshScheduler {
     private final WebSocketConnectionManager connectionManager;
     private final SubscriptionManager subscriptionManager;
 
+    /* Needed to maintain constant connection */
     @Scheduled(fixedRate = 8000, initialDelay = 8000)
-    public void onCloseRetrySession() {
+    public void sessionRefresh() {
         if (connectionManager.isConnected()) {
             subscriptionManager.unSubscribeAll();
             subscriptionManager.subscribeAll();
