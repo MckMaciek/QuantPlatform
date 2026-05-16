@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
 @RequiredArgsConstructor
 class WebSocketMessageSenderImpl implements WebSocketMessageSender {
 
-    private final RawWebSocketSender rawWebSocketSender;
+    private final WebSocketRawMessageSender webSocketRawMessageSender;
     private final ObjectMapper mapper;
 
     @Override
@@ -29,6 +29,6 @@ class WebSocketMessageSenderImpl implements WebSocketMessageSender {
     private void sendMessage(final Object message) {
         requireNonNull(message);
         final String stringified = mapper.writeValueAsString(message);
-        rawWebSocketSender.sendRawMessage(stringified);
+        webSocketRawMessageSender.sendRawMessage(stringified);
     }
 }

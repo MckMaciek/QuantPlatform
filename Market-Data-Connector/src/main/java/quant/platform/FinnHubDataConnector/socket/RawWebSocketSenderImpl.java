@@ -22,7 +22,7 @@ import static java.util.Objects.requireNonNull;
 @Setter
 @Service
 @RequiredArgsConstructor
-class RawWebSocketSender {
+class WebSocketRawMessageSender {
 
     private volatile WebSocketSession webSocketSession;
 
