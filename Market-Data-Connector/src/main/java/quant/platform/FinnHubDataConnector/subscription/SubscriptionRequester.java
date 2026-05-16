@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import quant.platform.FinnHubDataConnector.socket.WebSocketMessageSender;
 import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 import quant.platform.FinnHubDataConnector.util.time.TimeUtil;
 
@@ -14,11 +15,11 @@ import java.util.List;
 class SubscriptionRequester {
 
     private final List<String> symbols;
-    private final SubscriptionSender subscriptionSender;
+    private final WebSocketMessageSender webSocketMessageSender;
 
-    public SubscriptionRequester(final SubscriptionSender subscriptionSender,
+    public SubscriptionRequester(final WebSocketMessageSender webSocketMessageSender,
                                  @Value("${finnhub.symbols}") final List<String> symbols) {
-        this.subscriptionSender = subscriptionSender;
+        this.webSocketMessageSender = webSocketMessageSender;
         this.symbols = symbols;
     }
 
@@ -28,7 +29,7 @@ class SubscriptionRequester {
         log.info("Initializing subscriptions for {} symbols, sessionId: {}", symbols, sessionId);
         final var measured = TimeUtil.measure(
                 () -> symbols.forEach(
-                        symbol -> subscriptionSender.send(SubscriptionMessage.of(symbol))));
+                        symbol -> webSocketMessageSender.send(SubscriptionMessage.of(symbol))));
         log.info("Initializing subscriptions finished. Took ~ {} [ms], sessionId: {}",
                 measured.timeTookMs(), sessionId);
     }

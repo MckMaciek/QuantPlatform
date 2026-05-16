@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import quant.platform.FinnHubDataConnector.socket.WebSocketMessageSender;
 import quant.platform.FinnHubDataConnector.socket.session.WebSocketMessageReceived;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class MarketDataReceiver {
+class ConnectionDataReceiver {
+
+    private final WebSocketMessageSender sender;
 
     @Order(1)
     @EventListener
@@ -18,5 +21,13 @@ class MarketDataReceiver {
         final String payload = event.getMessage().getPayload();
         final String sessionId = event.getSessionId();
         log.info("Message received: {}, sessionId: {}", payload, sessionId);
+        if (payload.contains("\"type\":\"error\"")) {
+            log.error("FinnHub error received: {}, sessionId: {}", payload, sessionId);
+        } else if (payload.contains("\"type\":\"ping\"")) {
+            log.debug("Ping received, sessionId: {}", sessionId);
+            sender.send(new PongMessage());
+        } else {
+            log.info("Message received: {}, sessionId: {}", payload, sessionId);
+        }
     }
 }

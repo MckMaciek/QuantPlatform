@@ -22,7 +22,7 @@ import static java.util.Objects.requireNonNull;
 @Setter
 @Service
 @RequiredArgsConstructor
-class WebSocketSenderImpl implements WebSocketSender {
+class RawWebSocketSender {
 
     private volatile WebSocketSession webSocketSession;
 
@@ -32,7 +32,7 @@ class WebSocketSenderImpl implements WebSocketSender {
         this.setWebSocketSession(event.getSafeSession());
     }
 
-    public void sendMessage(@NonNull final String message) {
+    public void sendRawMessage(@NonNull final String message) {
         requireNonNull(message);
 
         final Measured<?> measured = TimeUtil.measure(() -> {
