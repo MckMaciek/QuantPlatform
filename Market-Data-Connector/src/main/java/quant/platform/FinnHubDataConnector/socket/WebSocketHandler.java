@@ -27,7 +27,7 @@ class WebSocketHandler extends TextWebSocketHandler {
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
-    public void afterConnectionEstablished(@NonNull final WebSocketSession unsafeSession) {
+    public void afterConnectionEstablished(@NonNull @Deprecated final WebSocketSession unsafeSession) {
         log.info("Successfully established connection: {}", unsafeSession.getId());
         final WebSocketSession safeSession = new ConcurrentWebSocketSessionDecorator(
                 unsafeSession, SEND_TIME_LIMIT_MS, BUFFER_SIZE_LIMIT_KB);
@@ -35,14 +35,14 @@ class WebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(@NonNull final WebSocketSession unsafeSession,
+    protected void handleTextMessage(@NonNull @Deprecated final WebSocketSession unsafeSession,
                                      @NonNull final TextMessage message) {
         final String sessionId = unsafeSession.getId();
         eventPublisher.publishEvent(new WebSocketMessageReceived(this, sessionId, message));
     }
 
     @Override
-    public void afterConnectionClosed(@NonNull final WebSocketSession unsafeSession,
+    public void afterConnectionClosed(@NonNull @Deprecated final WebSocketSession unsafeSession,
                                       @NonNull final CloseStatus status) {
         final String sessionId = unsafeSession.getId();
         log.info("Connection: {} closed", sessionId);
@@ -50,7 +50,7 @@ class WebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void handleTransportError(@NonNull final WebSocketSession unsafeSession,
+    public void handleTransportError(@NonNull @Deprecated final WebSocketSession unsafeSession,
                                      @NonNull final Throwable exception) {
         log.error("Transport error, sessionId: {}", unsafeSession.getId(), exception);
     }
