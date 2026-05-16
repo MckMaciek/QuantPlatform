@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.config;
+package quant.platform.FinnHubDataConnector.socket;
 
 import org.jspecify.annotations.NonNull;
 

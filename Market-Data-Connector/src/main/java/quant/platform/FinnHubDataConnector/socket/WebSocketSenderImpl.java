@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.config;
+package quant.platform.FinnHubDataConnector.socket;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import quant.platform.FinnHubDataConnector.config.session.WebSocketSessionEstablished;
+import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 import quant.platform.FinnHubDataConnector.util.time.Measured;
 import quant.platform.FinnHubDataConnector.util.time.TimeUtil;
 

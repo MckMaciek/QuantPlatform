@@ -3,7 +3,7 @@ package quant.platform.FinnHubDataConnector.subscription;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
-import quant.platform.FinnHubDataConnector.config.WebSocketSender;
+import quant.platform.FinnHubDataConnector.socket.WebSocketSender;
 import tools.jackson.databind.ObjectMapper;
 
 import static java.util.Objects.requireNonNull;

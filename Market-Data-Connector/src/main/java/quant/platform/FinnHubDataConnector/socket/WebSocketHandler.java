@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.config;
+package quant.platform.FinnHubDataConnector.socket;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import quant.platform.FinnHubDataConnector.config.session.WebSocketSessionEstablished;
+import quant.platform.FinnHubDataConnector.socket.session.WebSocketMessageReceived;
+import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +34,8 @@ class WebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(@NonNull final WebSocketSession unsafeSession,
                                      @NonNull final TextMessage message) {
-        log.debug(message.getPayload());
+        final String sessionId = unsafeSession.getId();
+        eventPublisher.publishEvent(new WebSocketMessageReceived(this, sessionId, message));
     }
 
     @Override

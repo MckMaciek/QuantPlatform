@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import quant.platform.FinnHubDataConnector.config.session.WebSocketSessionEstablished;
+import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 import quant.platform.FinnHubDataConnector.util.time.TimeUtil;
 
 import java.util.List;

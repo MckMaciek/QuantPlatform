@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.config.session;
+package quant.platform.FinnHubDataConnector.socket.session;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
