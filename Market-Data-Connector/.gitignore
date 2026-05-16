@@ -32,3 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 /VM-options.txt
+/.claude/hooks/post-tool-call.py
+/.claude/settings.local.json
