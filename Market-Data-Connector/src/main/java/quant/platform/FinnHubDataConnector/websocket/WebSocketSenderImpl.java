@@ -23,7 +23,7 @@ class WebSocketSenderImpl implements WebSocketSender {
 
     private volatile WebSocketSession webSocketSession;
 
-    public void sendMessage(final @NonNull String message) {
+    public void sendMessage(@NonNull final String message) {
         requireNonNull(message);
 
         final Measured<?> measured = TimeUtil.measure(() -> {
