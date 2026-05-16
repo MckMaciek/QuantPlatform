@@ -4,3 +4,4 @@ spring:
 
 finnhub:
   url: wss://ws.finnhub.io
+  symbols: AAPL,AMZN

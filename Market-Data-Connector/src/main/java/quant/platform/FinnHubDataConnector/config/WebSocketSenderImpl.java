@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import quant.platform.FinnHubDataConnector.config.session.WebSocketSessionEstablished;
 import quant.platform.FinnHubDataConnector.util.time.Measured;
 import quant.platform.FinnHubDataConnector.util.time.TimeUtil;
 
@@ -23,6 +26,12 @@ class WebSocketSenderImpl implements WebSocketSender {
 
     private volatile WebSocketSession webSocketSession;
 
+    @Order(1)
+    @EventListener
+    public void sessionCreatedEvent(final WebSocketSessionEstablished event) {
+        this.setWebSocketSession(event.getSafeSession());
+    }
+
     public void sendMessage(@NonNull final String message) {
         requireNonNull(message);
 
@@ -35,7 +44,7 @@ class WebSocketSenderImpl implements WebSocketSender {
                     throw new RuntimeException(e);
                 }
             } else {
-                log.warn("Cannot send message — session not open");
+                log.warn("Cannot send message — session not open!");
             }
         });
         log.debug("Message processing, took {} [ms]", measured.timeTookMs());

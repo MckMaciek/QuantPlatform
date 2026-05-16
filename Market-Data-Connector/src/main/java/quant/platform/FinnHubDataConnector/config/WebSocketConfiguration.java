@@ -1,6 +1,7 @@
 package quant.platform.FinnHubDataConnector.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -15,14 +16,14 @@ class WebSocketConfiguration {
     private final String finnHubUrl;
     private final String finnHubToken;
 
-    private final WebSocketSenderImpl webSocketSenderImpl;
+    private final ApplicationEventPublisher eventPublisher;
 
     public WebSocketConfiguration(@Value("${finnhub.url}") final String finnHubUrl,
                                   @Value("${finnhub.api-key}") final String finnHubToken,
-                                  final WebSocketSenderImpl webSocketSenderImpl) {
+                                  final ApplicationEventPublisher eventPublisher) {
         this.finnHubUrl = finnHubUrl;
         this.finnHubToken = finnHubToken;
-        this.webSocketSenderImpl = webSocketSenderImpl;
+        this.eventPublisher = eventPublisher;
     }
 
     @Bean
@@ -35,7 +36,7 @@ class WebSocketConfiguration {
 
         final WebSocketConnectionManager manager = new WebSocketConnectionManager(
                 client,
-                new WebSocketHandler(webSocketSenderImpl),
+                new WebSocketHandler(eventPublisher),
                 uriBuilder.toUriString());
         manager.setAutoStartup(true);
 
