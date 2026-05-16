@@ -37,7 +37,7 @@ class WebSocketSenderImpl implements WebSocketSender {
 
         final Measured<?> measured = TimeUtil.measure(() -> {
             if (isSessionOpen()) {
-                log.debug("Sending raw message: {}", message);
+                log.info("Sending raw message: {}", message);
                 try {
                     webSocketSession.sendMessage(new TextMessage(message));
                 } catch (final IOException e) {
@@ -47,7 +47,7 @@ class WebSocketSenderImpl implements WebSocketSender {
                 log.warn("Cannot send message — session not open!");
             }
         });
-        log.debug("Message processing, took ~ {} [ms]", measured.timeTookMs());
+        log.info("Message processing, took ~ {} [ms]", measured.timeTookMs());
     }
 
     private boolean isSessionOpen() {

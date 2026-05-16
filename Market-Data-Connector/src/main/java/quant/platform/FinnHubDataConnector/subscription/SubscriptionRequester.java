@@ -25,11 +25,11 @@ class SubscriptionRequester {
     @EventListener
     public void sessionCreatedEvent(final WebSocketSessionEstablished event) {
         final String sessionId = event.getSafeSession().getId();
-        log.debug("Initializing subscriptions for {} symbols, sessionId: {}", symbols, sessionId);
+        log.info("Initializing subscriptions for {} symbols, sessionId: {}", symbols, sessionId);
         final var measured = TimeUtil.measure(
                 () -> symbols.forEach(
                         symbol -> subscriptionSender.send(SubscriptionMessage.of(symbol))));
-        log.debug("Initializing subscriptions finished. Took ~ {} [ms], sessionId: {}",
+        log.info("Initializing subscriptions finished. Took ~ {} [ms], sessionId: {}",
                 measured.timeTookMs(), sessionId);
     }
 }
