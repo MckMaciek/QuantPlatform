@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.websocket;
+package quant.platform.FinnHubDataConnector.config;
 
 import org.jspecify.annotations.NonNull;
 import org.springframework.web.socket.WebSocketSession;

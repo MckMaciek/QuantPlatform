@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.websocket;
+package quant.platform.FinnHubDataConnector.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
