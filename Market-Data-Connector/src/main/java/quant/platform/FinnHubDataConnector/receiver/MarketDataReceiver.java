@@ -15,6 +15,7 @@ class MarketDataReceiver {
     @Order(1)
     @EventListener
     public void sessionCreatedEvent(final WebSocketMessageReceived event) {
-        log.debug(String.valueOf(event));
+        log.debug("Message received: {}, sessionId: {}",
+                event.getMessage().toString(), event.getSessionId());
     }
 }
