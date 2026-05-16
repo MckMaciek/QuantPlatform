@@ -1,13 +1,11 @@
 package quant.platform.FinnHubDataConnector.socket;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
@@ -16,30 +14,36 @@ class WebSocketConfiguration {
     private final String finnHubUrl;
     private final String finnHubToken;
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final WebSocketHandler webSocketHandler;
 
     public WebSocketConfiguration(@Value("${finnhub.url}") final String finnHubUrl,
                                   @Value("${finnhub.api-key}") final String finnHubToken,
-                                  final ApplicationEventPublisher eventPublisher) {
+                                  final WebSocketHandler webSocketHandler) {
         this.finnHubUrl = finnHubUrl;
         this.finnHubToken = finnHubToken;
-        this.eventPublisher = eventPublisher;
+        this.webSocketHandler = webSocketHandler;
     }
 
     @Bean
-    public WebSocketConnectionManager wsConnectionManager() {
-        final WebSocketClient client = new StandardWebSocketClient();
+    public WebSocketClient webSocketClient() {
+        return new StandardWebSocketClient();
+    }
 
-        final UriComponents uriBuilder = UriComponentsBuilder.fromUriString(finnHubUrl)
-                .queryParam("token", finnHubToken)
-                .build();
-
+    @Bean
+    public WebSocketConnectionManager wsConnectionManager(final WebSocketClient client) {
         final WebSocketConnectionManager manager = new WebSocketConnectionManager(
                 client,
-                new WebSocketHandler(eventPublisher),
-                uriBuilder.toUriString());
+                webSocketHandler,
+                getUriString());
         manager.setAutoStartup(true);
 
         return manager;
+    }
+
+    public String getUriString() {
+        return UriComponentsBuilder.fromUriString(finnHubUrl)
+                .queryParam("token", finnHubToken)
+                .build()
+                .toUriString();
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -13,6 +14,7 @@ import quant.platform.FinnHubDataConnector.socket.session.WebSocketMessageReceiv
 import quant.platform.FinnHubDataConnector.socket.session.WebSocketSessionEstablished;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 class WebSocketHandler extends TextWebSocketHandler {
 
