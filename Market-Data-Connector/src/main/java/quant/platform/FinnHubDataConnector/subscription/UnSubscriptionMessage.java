@@ -7,12 +7,12 @@ import quant.platform.FinnHubDataConnector.socket.WebSocketMessage;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class SubscriptionMessage implements WebSocketMessage {
+public class UnSubscriptionMessage implements WebSocketMessage {
 
-    private final String type = "subscribe";
+    private final String type = "unsubscribe";
     private final String symbol;
 
-    public static SubscriptionMessage of(final String symbol) {
-        return new SubscriptionMessage(symbol);
+    public static UnSubscriptionMessage of(final String symbol) {
+        return new UnSubscriptionMessage(symbol);
     }
 }
