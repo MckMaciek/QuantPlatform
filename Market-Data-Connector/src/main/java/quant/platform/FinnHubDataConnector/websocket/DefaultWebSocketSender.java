@@ -21,7 +21,7 @@ import static java.util.Objects.requireNonNull;
 @RequiredArgsConstructor
 class DefaultWebSocketSender implements WebSocketSender {
 
-    private WebSocketSession webSocketSession;
+    private volatile WebSocketSession webSocketSession;
 
     public void sendMessage(final @NonNull String message) {
         requireNonNull(message);
@@ -34,9 +34,11 @@ class DefaultWebSocketSender implements WebSocketSender {
                 } catch (final IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                log.warn("Cannot send message — session not open");
             }
         });
-        log.debug("Message has been sent, took {} [ms]", measured.timeTookMs());
+        log.debug("Message processing, took {} [ms]", measured.timeTookMs());
     }
 
     private boolean isSessionOpen() {
