@@ -4,4 +4,4 @@ spring:
 
 finnhub:
   url: wss://ws.finnhub.io
-  symbols: AAPL,AMZN
+  symbols: AAPL,AMZN,BINANCE:BTCUSDT

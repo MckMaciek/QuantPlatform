@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.receiver;
+package quant.platform.FinnHubDataConnector.connection;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +14,9 @@ class MarketDataReceiver {
 
     @Order(1)
     @EventListener
-    public void sessionCreatedEvent(final WebSocketMessageReceived event) {
-        log.info("Message received: {}, sessionId: {}",
-                event.getMessage().getPayload(), event.getSessionId());
+    public void messageReceived(final WebSocketMessageReceived event) {
+        final String payload = event.getMessage().getPayload();
+        final String sessionId = event.getSessionId();
+        log.info("Message received: {}, sessionId: {}", payload, sessionId);
     }
 }
