@@ -18,7 +18,7 @@ class WebSocketHandler extends TextWebSocketHandler {
     private static final int KB = 1024;
     private static final int BUFFER_SIZE_LIMIT_KB = 512 * KB;
 
-    private final DefaultWebSocketSender webSocketSender;
+    private final WebSocketSender webSocketSender;
 
     @Override
     public void afterConnectionEstablished(@NonNull final WebSocketSession unsafeSession) {
