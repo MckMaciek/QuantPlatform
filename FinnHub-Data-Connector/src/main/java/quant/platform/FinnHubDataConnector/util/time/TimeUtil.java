@@ -14,6 +14,6 @@ public class TimeUtil {
     }
 
     public static long currentTimeMs() {
-        return System.currentTimeMillis() / 1000;
+        return System.nanoTime() / 1_000_000;
     }
 }
