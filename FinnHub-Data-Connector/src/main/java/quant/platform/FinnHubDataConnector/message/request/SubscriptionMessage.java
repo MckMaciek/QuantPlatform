@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.subscription;
+package quant.platform.FinnHubDataConnector.message.request;
 
 import lombok.*;
 import quant.platform.FinnHubDataConnector.socket.WebSocketMessage;

@@ -1,4 +1,4 @@
-package quant.platform.FinnHubDataConnector.connection;
+package quant.platform.FinnHubDataConnector.message.request;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
