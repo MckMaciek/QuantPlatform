@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class ExponentialRetry {
 
     private static final int MAX_ATTEMPTS = 15;
-    private static final int MAX_DELAY_SECONDS = 300;
+    private static final int MAX_DELAY_IN_SECONDS = 300;
 
     private volatile int attemptCount = 0;
 
@@ -45,7 +45,14 @@ public class ExponentialRetry {
         }
     }
 
+    /**
+     * Exponential backoff
+     * 1st attempt - 2 seconds,
+     * 2nd attempt - 4 seconds,
+     * 3rd attempt - 8 seconds etc.
+     * max limit is {@link #MAX_DELAY_IN_SECONDS}
+     */
     private int backoffDelaySeconds(final int attempt) {
-        return Math.min(1 << attempt, MAX_DELAY_SECONDS);
+        return Math.min(1 << attempt, MAX_DELAY_IN_SECONDS);
     }
 }
