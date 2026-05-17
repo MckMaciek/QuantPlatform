@@ -39,8 +39,7 @@ class WebSocketReconnectService {
     }
 
     @EventListener
-    @SuppressWarnings("unused")
-    public void onSessionEstablished(final WebSocketSessionEstablished event) {
+    public void onSessionEstablished(@SuppressWarnings("unused") final WebSocketSessionEstablished event) {
         this.retry.reset();
     }
 
