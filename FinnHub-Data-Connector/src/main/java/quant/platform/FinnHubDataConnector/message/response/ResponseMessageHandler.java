@@ -23,9 +23,8 @@ class ResponseMessageHandler {
     @Order(1)
     @EventListener
     public void messageReceived(final WebSocketMessageReceived event) {
-        final String payload = event.getMessage().getPayload();
         final String sessionId = event.getSessionId();
-        log.info("Message received: {}, sessionId: {}", payload, sessionId);
+        log.info("Message received, sessionId: {}", sessionId);
 
         messageParser.parse(event.getMessage())
                 .onPingMessage(this::runOnPingMessage)
