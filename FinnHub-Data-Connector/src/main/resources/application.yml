@@ -9,6 +9,9 @@ spring:
   application:
     name: FinnHubConnectorApplication
 
+server:
+  port=8081:
+
 finnhub:
   url: wss://ws.finnhub.io
   symbols: AAPL,AMZN,BINANCE:BTCUSDT
