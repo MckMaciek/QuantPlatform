@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 public class TimeUtil {
 
     public static <T> Measured<T> measure(final Runnable runnable) {
-        final long initial = currentTimeMs();
+        final long initial = currentTimeNano();
         runnable.run();
-        final long total = initial - currentTimeMs();
+        final long total = (initial - currentTimeNano()) / 1_000_000;
         return Measured.empty(total);
     }
 
-    public static long currentTimeMs() {
-        return System.nanoTime() / 1_000_000;
+    public static long currentTimeNano() {
+        return System.nanoTime();
     }
 }
