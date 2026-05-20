@@ -19,6 +19,6 @@ class TradePublisherImpl implements TradePublisher {
 
     @Override
     public void publish(final TradeMessage message) {
-        kafkaTemplate.send(String.format("finnhub-io-%s", serviceId), message);
+        kafkaTemplate.send(String.format("finnhub-io-raw-%s", serviceId), message);
     }
 }
