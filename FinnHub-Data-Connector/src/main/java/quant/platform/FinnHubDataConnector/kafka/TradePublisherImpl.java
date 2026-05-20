@@ -3,6 +3,7 @@ package quant.platform.FinnHubDataConnector.kafka;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import quant.platform.FinnHubDataConnector.config.KafkaConfig;
 import quant.platform.FinnHubDataConnector.message.response.type.TradeMessage;
 
 @Service
@@ -19,6 +20,6 @@ class TradePublisherImpl implements TradePublisher {
 
     @Override
     public void publish(final TradeMessage message) {
-        kafkaTemplate.send(String.format("finnhub-io-raw-%s", serviceId), message);
+        kafkaTemplate.send(String.format("%s-%s", KafkaConfig.TOPIC_NAME, serviceId), message);
     }
 }
