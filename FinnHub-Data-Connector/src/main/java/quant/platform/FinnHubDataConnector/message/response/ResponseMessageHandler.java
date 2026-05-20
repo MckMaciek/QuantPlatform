@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import quant.platform.FinnHubDataConnector.kafka.TradePublisher;
 import quant.platform.FinnHubDataConnector.message.request.PongMessage;
 import quant.platform.FinnHubDataConnector.message.response.parse.MessageParser;
 import quant.platform.FinnHubDataConnector.message.response.type.PingMessage;
@@ -19,6 +20,8 @@ class ResponseMessageHandler {
 
     private final MessageParser messageParser;
     private final WebSocketMessageSender sender;
+
+    private final TradePublisher tradePublisher;
 
     @Order(1)
     @EventListener
@@ -38,5 +41,6 @@ class ResponseMessageHandler {
 
     private void runOnTradeMessage(final TradeMessage message) {
         log.info("Trade message received: {}", message);
+        tradePublisher.publish(message);
     }
 }

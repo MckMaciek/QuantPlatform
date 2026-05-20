@@ -13,8 +13,7 @@ public class AppConfig {
 
     @Bean
     public ScheduledExecutorService scheduledExecutorService() {
-        return Executors.newScheduledThreadPool(0,
-                Thread.ofVirtual().name("virtual-websocket-")
-                        .factory());
+        return Executors.newScheduledThreadPool(0, Thread.ofVirtual().name("virtual-websocket-")
+                .factory());
     }
 }
