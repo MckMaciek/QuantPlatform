@@ -1,6 +1,7 @@
-/vault/api_key.txt
-/vault/vault.exe
+.env
 
+### VAULT RELATED ###
+/vault/*
 
 ### STS ###
 .apt_generated
