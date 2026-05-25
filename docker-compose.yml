@@ -2,7 +2,7 @@ name: quant-platform
 
 services:
   vault:
-    image: hashicorp/vault:latest
+    image: hashicorp/vault:1.15.6
     container_name: vault
     ports:
       - "${VAULT_PORT}:${VAULT_PORT}"
@@ -15,7 +15,7 @@ services:
     restart: always
     
   vault-initializer:
-    image: hashicorp/vault:latest
+    image: hashicorp/vault:1.15.6
     container_name: vault-initializer
     environment:
       VAULT_TOKEN: ${ROOT_TOKEN}
@@ -29,8 +29,35 @@ services:
     depends_on:
       - vault
 
+  finnhub-data-connector:
+    build: ./FinnHub-Data-Connector/
+    container_name: finnhub-data-connector
+    ports:
+      - "${FINNHUB_DATA_CONNECTOR_PORT}:${FINNHUB_DATA_CONNECTOR_PORT}"
+    environment:
+      SERVER_PORT: "${FINNHUB_DATA_CONNECTOR_PORT}"
+      SPRING_CLOUD_VAULT_TOKEN: ${ROOT_TOKEN}
+      SPRING_PROFILES_ACTIVE: "local"
+      SPRING_CLOUD_VAULT_URI: "http://vault:${VAULT_PORT}"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : "kafka:9092"
+      SPRING_KAFKA_PRODUCER_PROPERTIES_RETRY_BACKOFF_MS: 1000
+      SPRING_KAFKA_PRODUCER_PROPERTIES_RECONNECT_BACKOFF_MS: 1000
+      SPRING_KAFKA_ADMIN_PROPERTIES_RETRY_BACKOFF_MS: 2000
+    depends_on:
+      - vault-initializer
+      - kafka
+
   kafka:
-    image: apache/kafka:latest
+    image: apache/kafka:3.9.0
     container_name: kafka
     ports:
-      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,EXTERNAL://0.0.0.0:29092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
