@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 
 @Slf4j
 @Component
+@SuppressWarnings("unused")
 @RequiredArgsConstructor
 class FinnHubTradeListener {
 
@@ -18,7 +19,6 @@ class FinnHubTradeListener {
 
     private final NormalizedTradePublisher publisher;
 
-    @SuppressWarnings("unused")
     @KafkaListener(topics = "${kafka.topics.raw-finnhub}", groupId = "${spring.kafka.consumer.group-id}")
     void onMessage(final FinnHubTrade trade) {
         log.info("Received FinnHub trade message, records: {}", trade.data().size());
