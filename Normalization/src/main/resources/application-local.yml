@@ -1,10 +1,10 @@
 server:
   port: 8081
 
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+
 kafka:
   topics:
     raw-finnhub: raw.finnhub.market-1
-
-spring:
-  kafka:
-    bootstrap-servers: "localhost:29092"

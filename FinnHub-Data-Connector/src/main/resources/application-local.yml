@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
   config:
     import: "vault://secret/FinnHubConnectorApplication/local"
   cloud:
