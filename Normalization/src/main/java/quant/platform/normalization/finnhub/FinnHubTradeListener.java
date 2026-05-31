@@ -12,13 +12,13 @@ import quant.platform.normalization.normalized.api.NormalizedTradePublisher;
 class FinnHubTradeListener {
 
     private final NormalizedTradePublisher publisher;
-    private final FinnHubConverter finnHubConverter = new FinnHubConverter();
+    private final FinnHubNormalizer finnHubNormalizer = new FinnHubNormalizer();
 
     @SuppressWarnings("unused")
     @KafkaListener(topics = "${kafka.topics.raw-finnhub}", groupId = "${spring.kafka.consumer.group-id}")
     void onMessage(final FinnHubTrade trade) {
         log.info("Received FinnHub trade message, records: {}", trade.data().size());
-        finnHubConverter.convert(trade)
+        finnHubNormalizer.normalize(trade)
                 .forEach(publisher::publish);
     }
 }

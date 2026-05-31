@@ -5,5 +5,5 @@ import quant.platform.normalization.normalized.NormalizedTrade;
 import java.util.List;
 
 public interface NormalizedConverter<T> {
-    List<NormalizedTrade> convert(final T t);
+    List<NormalizedTrade> normalize(final T t);
 }

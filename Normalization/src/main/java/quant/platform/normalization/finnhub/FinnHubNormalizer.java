@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-class FinnHubConverter implements NormalizedConverter<FinnHubTrade> {
+class FinnHubNormalizer implements NormalizedConverter<FinnHubTrade> {
 
     private static final String SOURCE = "finnhub";
 
     @Override
-    public List<NormalizedTrade> convert(final FinnHubTrade trade) {
+    public List<NormalizedTrade> normalize(final FinnHubTrade trade) {
         return trade.data().stream()
                 .map(this::toNormalizedTrade)
                 .collect(Collectors.toList());
