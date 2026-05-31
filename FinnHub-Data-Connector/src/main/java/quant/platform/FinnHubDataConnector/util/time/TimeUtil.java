@@ -9,7 +9,7 @@ public class TimeUtil {
     public static <T> Measured<T> measure(final Runnable runnable) {
         final long initial = currentTimeNano();
         runnable.run();
-        final long total = (initial - currentTimeNano()) / 1_000_000;
+        final long total = (currentTimeNano() - initial) / 1_000_000;
         return Measured.empty(total);
     }
 
