@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class KafkaConfig {
 
-    public static final String TOPIC_NAME = "raw.finnhub.market-";
+    public static final String TOPIC_NAME = "raw.finnhub.market";
 
     private final String serviceId;
 

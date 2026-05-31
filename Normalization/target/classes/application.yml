@@ -1,0 +1,23 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: Normalization
+  kafka:
+    consumer:
+      group-id: normalization-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "quant.platform.normalization.finnhub"
+        spring.json.use.type.headers: "false"
+        spring.json.value.default.type: "quant.platform.normalization.finnhub.FinnHubTrade"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+kafka:
+  topics:
+    raw-finnhub: raw.finnhub.market-1

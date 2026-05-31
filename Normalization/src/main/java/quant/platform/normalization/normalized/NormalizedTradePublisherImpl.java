@@ -1,0 +1,22 @@
+package quant.platform.normalization.normalized;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+import quant.platform.normalization.config.KafkaConfig;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+class NormalizedTradePublisherImpl implements NormalizedTradePublisher {
+
+    private final KafkaTemplate<String, NormalizedTrade> kafkaTemplate;
+
+    @Override
+    public void publish(final NormalizedTrade trade) {
+        log.debug("Publishing normalized trade: symbol: {}, price: {}, source: {}",
+                trade.symbol(), trade.price(), trade.source());
+        kafkaTemplate.send(KafkaConfig.NORMALIZED_TOPIC, trade.symbol(), trade);
+    }
+}
