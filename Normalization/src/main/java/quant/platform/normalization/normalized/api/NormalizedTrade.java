@@ -1,4 +1,4 @@
-package quant.platform.normalization.normalized;
+package quant.platform.normalization.normalized.api;
 
 import java.math.BigDecimal;
 

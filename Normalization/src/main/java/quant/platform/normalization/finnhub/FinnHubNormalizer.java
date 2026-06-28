@@ -1,8 +1,8 @@
 package quant.platform.normalization.finnhub;
 
 import lombok.RequiredArgsConstructor;
-import quant.platform.normalization.normalized.NormalizedTrade;
-import quant.platform.normalization.normalized.api.NormalizedConverter;
+import quant.platform.normalization.normalized.api.NormalizedTrade;
+import quant.platform.normalization.normalized.converter.NormalizedConverter;
 
 import java.math.BigDecimal;
 import java.util.List;

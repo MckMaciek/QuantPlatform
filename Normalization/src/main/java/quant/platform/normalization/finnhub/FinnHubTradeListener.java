@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import quant.platform.normalization.normalized.NormalizedTrade;
-import quant.platform.normalization.normalized.api.NormalizedCommonTradePublisher;
+import quant.platform.normalization.normalized.api.NormalizedTrade;
+import quant.platform.normalization.normalized.publisher.NormalizedCommonTradePublisher;
 
 import java.util.List;
 
