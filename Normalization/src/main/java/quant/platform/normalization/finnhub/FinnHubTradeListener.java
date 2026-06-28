@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import quant.platform.normalization.normalized.api.NormalizedTradePublisher;
+import quant.platform.normalization.normalized.api.NormalizedMarketTradePublisher;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 class FinnHubTradeListener {
 
-    private final NormalizedTradePublisher publisher;
+    private final NormalizedMarketTradePublisher publisher;
     private final FinnHubNormalizer finnHubNormalizer = new FinnHubNormalizer();
 
     @SuppressWarnings("unused")
