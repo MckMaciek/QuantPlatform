@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-class FinnHubNormalizer implements NormalizedConverter<FinnHubTrade> {
+class RawFinnHubNormalizer implements NormalizedConverter<RawFinnHubTrade> {
 
     private static final String SOURCE = "finnhub";
 
     @Override
-    public List<NormalizedTrade> normalize(final FinnHubTrade trade) {
+    public List<NormalizedTrade> normalize(final RawFinnHubTrade trade) {
         return trade.data().stream()
                 .map(this::toNormalizedTrade)
                 .collect(Collectors.toList());
     }
 
-    private NormalizedTrade toNormalizedTrade(final FinnHubTradeData data) {
+    private NormalizedTrade toNormalizedTrade(final RawFinnHubTradeData data) {
         final long timestampMs = Long.parseLong(data.t());
         return new NormalizedTrade(
                 data.s(),

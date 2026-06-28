@@ -10,7 +10,7 @@ spring:
       properties:
         spring.json.trusted.packages: "quant.platform.normalization.finnhub"
         spring.json.use.type.headers: "false"
-        spring.json.value.default.type: "quant.platform.normalization.finnhub.FinnHubTrade"
+        spring.json.value.default.type: "quant.platform.normalization.finnhub.RawFinnHubTrade"
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

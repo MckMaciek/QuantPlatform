@@ -12,18 +12,18 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class FinnHubTradeListener {
+class RawFinnHubTradeListener {
 
     private final NormalizedCommonTradePublisher commonPublisher;
     private final NormalizedFinnHubTradePublisher finHubPublisher;
 
-    private final FinnHubNormalizer finnHubNormalizer = new FinnHubNormalizer();
+    private final RawFinnHubNormalizer rawFinnHubNormalizer = new RawFinnHubNormalizer();
 
     @SuppressWarnings("unused")
     @KafkaListener(topics = "${kafka.topics.raw-finnhub}", groupId = "${spring.kafka.consumer.group-id}")
-    void onMessage(final FinnHubTrade trade) {
+    void onMessage(final RawFinnHubTrade trade) {
         log.info("Received FinnHub trade message, records: {}", trade.data().size());
-        final List<NormalizedTrade> normalized = finnHubNormalizer.normalize(trade);
+        final List<NormalizedTrade> normalized = rawFinnHubNormalizer.normalize(trade);
 
         normalized.forEach(commonPublisher::publish);
         normalized.forEach(finHubPublisher::publish);
